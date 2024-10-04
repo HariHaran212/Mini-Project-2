@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Collection Screen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('background.jpg') no-repeat center center/cover;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .file-input {
+            display: flex;
+            align-items: center;
+        }
+        .file-input input {
+            padding: 5px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Evidence Collection Screen</h1>
+    <form id="evidenceForm">
+        <label for="evidenceId">Evidence ID:</label>
+        <input type="text" id="evidenceId" name="evidenceId" required>
+
+        <label for="crimeType">Crime Type:</label>
+        <select id="crimeType" name="crimeType" required>
+            <option value="">Select Crime Type</option>
+            <option value="Theft">Theft</option>
+            <option value="Assault">Assault</option>
+            <option value="Fraud">Fraud</option>
+            <option value="Cybercrime">Cybercrime</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label for="crimeDescription">Crime Description:</label>
+        <textarea id="crimeDescription" name="crimeDescription" rows="4" required></textarea>
+
+        <label for="evidenceDetails">Collection Evidence Details:</label>
+        <textarea id="evidenceDetails" name="evidenceDetails" rows="4" required></textarea>
+
+        <label for="crimeArea">Crime Area:</label>
+        <input type="text" id="crimeArea" name="crimeArea" required>
+
+        <label for="witnesses">Eye Witnesses (Optional):</label>
+        <input type="text" id="witnesses" name="witnesses">
+
+        <label for="uploadEvidence">Upload Evidence File:</label>
+        <div class="file-input">
+            <input type="file" id="uploadEvidence" name="uploadEvidence" required>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" 
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+<script>
+    document.getElementById('evidenceForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        let evidenceId = document.getElementById('evidenceId').value;
+        let crimeType = document.getElementById('crimeType').value;
+        let crimeDescription = document.getElementById('crimeDescription').value;
+        let evidenceDetails = document.getElementById('evidenceDetails').value;
+        let crimeArea = document.getElementById('crimeArea').value;
+        let witnesses = document.getElementById('witnesses').value;
+        let evidenceFile = document.getElementById('uploadEvidence').files[0];
+
+        if (evidenceFile) {
+            let fileReader = new FileReader();
+            fileReader.onload = function() {
+                let fileHash = sha256(fileReader.result);  // Example hash function (use real hashing)
+                console.log('File Hash:', fileHash);
+                
+                // Simulating form submission
+                console.log({
+                    evidenceId,
+                    crimeType,
+                    crimeDescription,
+                    evidenceDetails,
+                    crimeArea,
+                    witnesses,
+                    fileHash  // Here you can store the hash on the blockchain
+                });
+
+                alert("Evidence submitted successfully!");
+            };
+            fileReader.readAsArrayBuffer(evidenceFile);
+        } else {
+            alert("Please upload an evidence file.");
+        }
+    });
+
+    function sha256(buffer) {
+        // Placeholder for real SHA-256 hashing. Use a crypto library for actual implementation.
+        return 'examplehash';  // Replace this with real hash
+    }
+</script>
+
+</body>
+</html>
